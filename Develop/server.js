@@ -3,19 +3,23 @@ const path = require('path');
 const fs = require('fs');
 const db = require('./db/db.json');
 const app = express();
+const { readAndAppend, readFromFile, writeToFile } = require('./helpers/fs')
 
 const PORT = process.env.port || 3001;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.get('/', (req, res) => 
-    res.sendFile(path.join(__dirname, '/public/index.html'))
+// generates unique id
+const id = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+
+app.get('/notes', (req, res) => 
+    res.sendFile(path.join(__dirname, './public/notes.html'))
 );
 
 app.get('/api/notes', (req, res) => {
-    res.status(200).json(db);
+    readFromFile('./db/db.json')
+    .then((data) => res.json(JSON.parse(data)))
 });
 
 app.post('/api/notes', (req, res) => {
@@ -24,13 +28,10 @@ app.post('/api/notes', (req, res) => {
         let newNote = {
             title,
             text,
-            id
+            id: id()
         };
-
-
-            // readfile
-
-            // then write file
+        readAndAppend(newNote, './db/db.json')
+        res.json(newNote)
     }
 });
 
