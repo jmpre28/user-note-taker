@@ -5,7 +5,7 @@ const db = require('./db/db.json');
 const app = express();
 const { readAndAppend, readFromFile } = require('./helpers/fs')
 
-const PORT = process.env.port || 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -60,5 +60,5 @@ app.get('*', (req, res) =>
 );
 
 app.listen( PORT, () => 
-    console.log(`App listening at http://localhost:${PORT}`)
+    console.log(`App listening at port: ${PORT}`)
 );
