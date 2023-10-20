@@ -40,18 +40,18 @@ app.post('/api/notes', (req, res) => {
 app.delete('/api/notes/:id', (req, res) => {
     const id = req.params.id;
     fs.readFile('./db/db.json', 'utf-8', (err, data) => {
-        if (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        const deleteNote = JSON.parse(data).filter(newNote => newNote.id !== id);
+        fs.writeFile('./db/db.json', JSON.stringify(deleteNote), (err) => {
+          if (err) {
             console.log(err);
-        } else {
-            const deleteNote = JSON.parse(data).filter(newNote => newNote.id !== id);
-            fs.writeFile('./db/db.json', JSON.stringify(deleteNote), (err) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.json(deleteNote);
-                }
-            });
-        }
+          } else {
+            res.json(deleteNote);
+          }
+        });
+      }
     });
 });
 

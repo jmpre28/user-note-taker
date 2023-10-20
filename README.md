@@ -35,9 +35,9 @@ THEN The previously saved note no longer appears in the column and has been remo
 
 ## Examples
 
-<img src="./public/assets/images/note-taker-home.jpg" alt="Note Taker homepage">
+<img src="./Develop/public/assets/images/note-taker-home.jpg" alt="Note Taker homepage">
 
-<img src="./public/assets/images/note-taker-myNotes.jpg" alt="Note Taker my notes list">
+<img src="./Develop/public/assets/images/note-taker-myNotes.jpg" alt="Note Taker my notes list">
 
 ## Links
 This app is now live and was deployed to Railway. You can find the link here: https://user-note-taker-production.up.railway.app/
