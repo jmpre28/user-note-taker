@@ -1,5 +1,5 @@
 # user-note-taker
-This application uses an Express.js back end and has the ability to save and retrieve note data from a JSON file.
+This application uses an Express.js back end and has the ability to save, retrieve and delete note data from a JSON file.
 
 
 ## User Story
