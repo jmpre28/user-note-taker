@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const db = require('./db/db.json');
 const app = express();
-const { readAndAppend, readFromFile, writeToFile } = require('./helpers/fs')
+const { readAndAppend, readFromFile } = require('./helpers/fs')
 
 const PORT = process.env.port || 3001;
 
@@ -22,6 +22,7 @@ app.get('/api/notes', (req, res) => {
     .then((data) => res.json(JSON.parse(data)))
 });
 
+// Create route to write notes
 app.post('/api/notes', (req, res) => {
     const {title, text} = req.body;
     if (req.body) {
@@ -33,6 +34,25 @@ app.post('/api/notes', (req, res) => {
         readAndAppend(newNote, './db/db.json')
         res.json(newNote)
     }
+});
+
+// Delete route to remove notes
+app.delete('/api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    fs.readFile('./db/db.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.log(err);
+        } else {
+            const deleteNote = JSON.parse(data).filter(newNote => newNote.id !== id);
+            fs.writeFile('./db/db.json', JSON.stringify(deleteNote), (err) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.json(deleteNote);
+                }
+            });
+        }
+    });
 });
 
 app.get('*', (req, res) =>
