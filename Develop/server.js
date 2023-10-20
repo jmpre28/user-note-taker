@@ -36,7 +36,7 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
-// Delete route to remove notes
+// Delete route to remove notes 
 app.delete('/api/notes/:id', (req, res) => {
     const id = req.params.id;
     fs.readFile('./db/db.json', 'utf-8', (err, data) => {
